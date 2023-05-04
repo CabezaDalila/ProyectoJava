@@ -8,14 +8,12 @@ import reports.ReportePublicacion;
 
 public class Sitema {
 
-	private static PerfilInstagram perfil;
-	
 	public static void main(String[] args) {
-		perfil = PerfilInstagram.getInstance();
+		PerfilInstagram perfil = new PerfilInstagram();
 		perfil.cargarPublicaciones();
-		//List<ReportePublicacion> listaReportes=perfil.cantidadYpromedioDeMg();
-		//generarReporteEnPantalla(listaReportes);
-		//generarReporteEnArchivo(listaReportes);
+		List<ReportePublicacion> listaReportes=perfil.cantidadYpromedioDeMg();
+		generarReporteEnPantalla(listaReportes);
+		generarReporteEnArchivo(listaReportes);
 		
 	}
 	public static void generarReporteEnPantalla(List<ReportePublicacion> listaReportes) {

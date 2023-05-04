@@ -76,7 +76,7 @@ public class PerfilUsuario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String nombreAlbum = JOptionPane.showInputDialog("Ingrese el nombre del nuevo Album");
 				Album nuevoAlbum = new Album(nombreAlbum);
-				PerfilInstagram.getInstance().agregaAlbum(nuevoAlbum);				
+				PerfilInstagram.getInstance().addAlbum(nuevoAlbum);				
 				JOptionPane.showMessageDialog(null, "El álbum fue agregado con éxito");
 			}
 		});
@@ -93,8 +93,8 @@ public class PerfilUsuario extends JFrame {
 				String nombrePubli = JOptionPane.showInputDialog("Ingrese el nombre de la Publicación");
 				try {
 					PerfilInstagram.getInstance().buscaAlbum(nombreAlbum);
-					PerfilInstagram.getInstance().buscaPublicacion(nombrePubli);
-					PerfilInstagram.getInstance().agregaPubliDentroAlbum(nombreAlbum, nombrePubli);
+					PerfilInstagram.getInstance().buscaPubli(nombrePubli);
+					PerfilInstagram.getInstance().addPubliDentroAlbum(nombreAlbum, nombrePubli);
 					JOptionPane.showMessageDialog(null, "La publicación fue eliminada con éxito");
 				} catch (AlbumNoEncontradoException e1) {
 					JOptionPane.showMessageDialog(null, "El álbum NO existe. Intente de nuevo.");

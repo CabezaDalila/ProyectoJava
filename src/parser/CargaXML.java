@@ -47,7 +47,7 @@ public class CargaXML {
 								.parseInt(elementoAudio.getElementsByTagName("velocidadBits").item(0).getTextContent());
 						Audio audio = new Audio(nombrePublicacion, fechaSubidaLocalDate, cantMG, velocidadBits);
 						cargaEtiqComentAlbum(elementoAudio, audio);
-						perfil.agregaPublicacion(audio);
+						perfil.addPublicacion(audio);
 					} else if (elementoImagen != null) {
 						// Leer y procesar datos de la imagen
 						String resolucion = elementoImagen.getElementsByTagName("resolucion").item(0).getTextContent();
@@ -58,7 +58,7 @@ public class CargaXML {
 						Imagen imagen = new Imagen(nombrePublicacion, fechaSubidaLocalDate, cantMG, resolucion, ancho,
 								alto);
 						cargaEtiqComentAlbum(elementoImagen, imagen);
-						perfil.agregaPublicacion(imagen);
+						perfil.addPublicacion(imagen);
 					} else if (elementoVideo != null) {
 						// Leer y procesar datos del video
 						String resolucion = elementoVideo.getElementsByTagName("resolucion").item(0).getTextContent();
@@ -67,7 +67,7 @@ public class CargaXML {
 						Video video = new Video(nombrePublicacion, fechaSubidaLocalDate, cantMG, resolucion,
 								cantCuadros);
 						cargaEtiqComentAlbum(elementoVideo, video);
-						perfil.agregaPublicacion(video);
+						perfil.addPublicacion(video);
 					}
 				}
 			}
@@ -93,7 +93,7 @@ public class CargaXML {
 		for (int i = 0; i < listaAlbumes.getLength(); i++) {
 			String albumNombre = listaAlbumes.item(i).getTextContent();
 			Album album = new Album(albumNombre);
-			publicacion.agregarAlbumPertenece(album);
+			publicacion.agregarAlbum(album);
 		}
 	}
 }

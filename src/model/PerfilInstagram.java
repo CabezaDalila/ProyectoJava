@@ -45,13 +45,13 @@ public class PerfilInstagram {
 		 return nombres;
 	}
 
-	public void agregaPublicacion(Publicacion publi) {
+	public void addPublicacion(Publicacion publi) {
 		if (publi != null) {
 			listaPublicaciones.add(publi);
 		}
 	}
 
-	public void agregaAlbum(Album nuevoAlbum) {
+	public void addAlbum(Album nuevoAlbum) {
 		if (nuevoAlbum != null)
 			listaAlbumes.add(nuevoAlbum);
 	}
@@ -67,7 +67,7 @@ public class PerfilInstagram {
 		throw new AlbumNoEncontradoException("El álbum no se encuentra en la lista.");
 	}
 	
-	public Publicacion buscaPublicacion(String nombre) throws PublicacionNoEncontradaException{
+	public Publicacion buscaPubli(String nombre) throws PublicacionNoEncontradaException{
 		Iterator <Publicacion> i = listaPublicaciones.iterator();
 		while (i.hasNext()) {
 			Publicacion publi = i.next();
@@ -140,23 +140,29 @@ public class PerfilInstagram {
 	}
 	
 	
-	public void agregaPubliDentroAlbum(String nombreAlbum, String nombrePubli) {
-		Album album;
-		try {
-			Publicacion publicacion = buscaPublicacion(nombrePubli);
-			album = buscaAlbum(nombreAlbum);
-			publicacion.agregarAlbumPertenece(album);
-			album.agregaPublicacionAalbum(publicacion);
-		} catch (AlbumNoEncontradoException e) {
-			e.printStackTrace();
-		}
-		catch (PublicacionNoEncontradaException e) {
-			e.printStackTrace();
-		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public void addPubliDentroAlbum(String nombreAlbum, String nombrePubli) {
 		
-}
-	
-	
+	}
 	
 	public void eliminaAlbum(Album albumAEliminar) throws AlbumNoEncontradoException {
 		// elimina album de la lista de albumes

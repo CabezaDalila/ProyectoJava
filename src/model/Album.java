@@ -56,19 +56,5 @@ public class Album {
 		}
 		listaPublicaciones.clear();
 	}
-	//verifica si existe la publicacion dentro del album, para que no quede repetida
-	public boolean tienePublicacion(Publicacion publicacion) {
-	    for (Publicacion p : listaPublicaciones) {
-	        if (p.equals(publicacion)) {
-	            return true;
-	        }
-	    }
-	    return false;
-	}
-	// antes de agregar la publicacion se fija que sea distinta de null y que no este repetida
-	//deberia tener una excepsion por si esta repedido ?
-	public void agregaPublicacionAalbum(Publicacion publicacion) {
-		if (publicacion != null && tienePublicacion(publicacion))
-		listaPublicaciones.add(publicacion);
-	}
+
 }
