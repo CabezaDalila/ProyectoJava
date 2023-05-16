@@ -1,4 +1,7 @@
 package sistema;
+import view.*;
+
+import java.awt.EventQueue;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,9 +16,15 @@ public class Sistema {
 	public static void main(String[] args) {
 		perfil = PerfilInstagram.getInstance();
 		perfil.cargarPublicaciones();
+		
+		EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                PerfilUsuario frame = new PerfilUsuario();
+                frame.setVisible(true);
+            }
+        });
+		
 		List<ReportePublicacion> listaReportes = perfil.cantidadYpromedioDeMg();
-		generarReporteEnPantalla(listaReportes);
-		generarReporteEnArchivo(listaReportes);
 
 	}
 	

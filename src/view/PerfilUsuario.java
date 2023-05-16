@@ -2,10 +2,8 @@ package view;
 
 import model.*;
 import sistema.*;
-
 import java.awt.*;
 import javax.swing.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,31 +12,22 @@ import java.awt.event.MouseEvent;
 import javax.swing.border.EmptyBorder;
 import exception.*;
 import java.util.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 
 public class PerfilUsuario extends JFrame {
 	
 	private JPanel contentPane;
 	private static PerfilInstagram perfilInstagram;
-	
-
-	public static void main(String[] args) {
-		perfilInstagram = PerfilInstagram.getInstance();
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				PerfilUsuario frame = new PerfilUsuario();
-				frame.setVisible(true);
-			}
-		});
-	}
 
 	public PerfilUsuario() {
+		
 		setTitle("Perfil del Usuario");
-		//setSize(787,401);
-		//setSize(787,801);
-		// setMaximumSize(getMaximumSize());
 		setForeground(Color.DARK_GRAY);
 		setBackground(Color.GRAY);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 607, 401);
 		
@@ -48,6 +37,18 @@ public class PerfilUsuario extends JFrame {
 		setContentPane(contentPane);
 		
 		menuTop();
+		
+		perfilInstagram = PerfilInstagram.getInstance();
+		
+		WindowListener windowListener = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                perfilInstagram.serializar();
+                dispose();
+                System.exit(0);
+            }
+        };
+        addWindowListener(windowListener);
 	}
 	
 public void menuTop() {
@@ -126,6 +127,8 @@ public void menuTop() {
 					perfilInstagram.eliminarPublicacion(publicacionAEliminar);
 				}catch (PublicacionNoEncontradaException e1){
 					JOptionPane.showMessageDialog(null, "La publicación NO existe. Intente de nuevo.");
+				} catch (AlbumNoEncontradoException e1) {
+					JOptionPane.showMessageDialog(null, "El álbum NO existe. Intente de nuevo.");
 				}
 			}
 		});
@@ -175,6 +178,7 @@ public void menuTop() {
 		
 		return albumes;
 	}
+	
 	public JMenu menuTOPreportes() {
 		JMenu reportes = new JMenu("Reportes");
 		reportes.setFont(new Font("Open Sans", Font.PLAIN, 15));
@@ -210,6 +214,7 @@ public void menuTop() {
 		reportes.add(generaTXT);
 		return reportes;
 	}
+	
 	public JMenu menuTOPestadisticas(){
 		JMenu estadisticas = new JMenu("Estadísticas");
 		estadisticas.setFont(new Font("Open Sans", Font.PLAIN, 15));	
@@ -227,6 +232,7 @@ public void menuTop() {
 		});
 		return estadisticas;
 	}
+	
 	public JMenu menuTOPopciones() {
 		JMenu opciones = new JMenu("Opciones");
 		opciones.setFont(new Font("Open Sans", Font.PLAIN, 15));
@@ -252,6 +258,7 @@ public void menuTop() {
 		opciones.add(filtraPublicaciones);
 		return opciones;
 	}
+	
 	public void publicacionesActuales() {
 		
 		/**
@@ -275,4 +282,5 @@ public void menuTop() {
 			jpPublicaciones.setVisible(false);
 		}	
 	}
+	
 }

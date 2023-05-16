@@ -4,8 +4,12 @@ import parser.CargaXML;
 import reports.ReportePublicacion;
 import java.util.*;
 import exception.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class PerfilInstagram {
+public class PerfilInstagram implements Serializable {
 	
 	/** 
 	 * Uso de Modelo Singleton
@@ -157,7 +161,7 @@ public class PerfilInstagram {
 		}
 	}
 	
-	public void eliminarPublicacion(Publicacion publicacionAEliminar) throws PublicacionNoEncontradaException {
+	public void eliminarPublicacion(Publicacion publicacionAEliminar) throws PublicacionNoEncontradaException, AlbumNoEncontradoException {
 	    Iterator<Publicacion> iteradorPublicacion = listaPublicaciones.iterator();
 	    while (iteradorPublicacion.hasNext()) {
 	        Publicacion publicacion = iteradorPublicacion.next();
@@ -170,31 +174,13 @@ public class PerfilInstagram {
 	    while (iteradorAlbum.hasNext()) {
 	        Album album = iteradorAlbum.next();
 	        if (album.existePublicacion(publicacionAEliminar)) {
-	            album.desasociarReferenciasAPublicaciones();
+					album.desasociarReferenciasAPublicaciones();
 	        }
 	    }
 	}
 	public void sacarPublicacionDelAlbum(Publicacion publicacionASacar, Album album) throws PublicacionNoEncontradaException, AlbumNoEncontradoException{
 		album.sacarPublicacion(publicacionASacar);
 		publicacionASacar.sacarAlbum(album);
-	}
-
-	public void confListaReproduccion() {
-		/*
-		 * Permita la consulta y reproducción de un grupo de publicaciones seleccionadas
-		 * de acuerdo a filtros flexibles aplicados a los atributos que se crean más
-		 * relevantes. El orden de reproducción puede ser configurable de acuerdo a
-		 * algún o algunos atributos.
-		 */
-	}
-
-	public void resporteAlfabeticoAlbumes() {
-		/*
-		 * Listado alfabético de Álbumes, detallando para cada uno cantidad de
-		 * publicaciones subidas en un rango de fechas solicitado al operador. Incluir
-		 * la cantidad de comentarios correspondientes a esas publicaciones.(por
-		 * pantalla y en archivos de texto):
-		 */
 	}
 
 	@Override
@@ -211,4 +197,17 @@ public class PerfilInstagram {
         }
         return sb.toString();
 	}
+	
+	public void serializar() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("perfil.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+            fileOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
 }
