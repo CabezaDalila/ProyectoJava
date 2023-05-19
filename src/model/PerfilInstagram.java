@@ -37,7 +37,14 @@ public class PerfilInstagram implements Serializable {
 												// cargarPublicaciones()
 	}
 	
-	public Set<Publicacion> getPublicaciones() {
+	public Set<Publicacion> getPublicaciones() throws SinDatosException{
+		if (listaPublicaciones.isEmpty()) {
+			throw new SinDatosException("No hay datos.");
+		}
+		Set<String> nombres = new TreeSet<>();
+		for (Publicacion p : listaPublicaciones) {
+			nombres.add(p.getNombrePublicacion());
+		}
 		return listaPublicaciones;
 	}
 	
@@ -170,7 +177,7 @@ public class PerfilInstagram implements Serializable {
 	            break;
 	        }
 	    }
-	    Iterator<Album> iteradorAlbum = listaAlbumes.iterator();
+	   Iterator<Album> iteradorAlbum = listaAlbumes.iterator();
 	    while (iteradorAlbum.hasNext()) {
 	        Album album = iteradorAlbum.next();
 	        if (album.existePublicacion(publicacionAEliminar)) {

@@ -2,8 +2,11 @@ package view;
 
 import model.*;
 import sistema.*;
+import utils.AssetsUtils;
+
 import java.awt.*;
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,22 +15,32 @@ import java.awt.event.MouseEvent;
 import javax.swing.border.EmptyBorder;
 import exception.*;
 import java.util.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.util.List;
 
 
 public class PerfilUsuario extends JFrame {
 	
 	private JPanel contentPane;
 	private static PerfilInstagram perfilInstagram;
+	
+
+	public static void main(String[] args) {
+		perfilInstagram = PerfilInstagram.getInstance();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				PerfilUsuario frame = new PerfilUsuario();
+				frame.setVisible(true);
+			}
+		});
+	}
 
 	public PerfilUsuario() {
-		
 		setTitle("Perfil del Usuario");
+		//setSize(787,401);
+		//setSize(787,801);
+		// setMaximumSize(getMaximumSize());
 		setForeground(Color.DARK_GRAY);
 		setBackground(Color.GRAY);
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 607, 401);
 		
@@ -37,18 +50,6 @@ public class PerfilUsuario extends JFrame {
 		setContentPane(contentPane);
 		
 		menuTop();
-		
-		perfilInstagram = PerfilInstagram.getInstance();
-		
-		WindowListener windowListener = new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                perfilInstagram.serializar();
-                dispose();
-                System.exit(0);
-            }
-        };
-        addWindowListener(windowListener);
 	}
 	
 public void menuTop() {
@@ -101,6 +102,8 @@ public void menuTop() {
 		JMenuItem gaAgregaPubli = new JMenuItem("Agregar Publicación a un Album");
 		gaAgregaPubli.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFrame frame = new JFrame();
+		        frame.setAlwaysOnTop(true);
 				String nombreAlbum = JOptionPane.showInputDialog("Ingrese el nombre del Album");
 				String nombrePubli = JOptionPane.showInputDialog("Ingrese el nombre de la Publicación");
 				try {
@@ -128,7 +131,8 @@ public void menuTop() {
 				}catch (PublicacionNoEncontradaException e1){
 					JOptionPane.showMessageDialog(null, "La publicación NO existe. Intente de nuevo.");
 				} catch (AlbumNoEncontradoException e1) {
-					JOptionPane.showMessageDialog(null, "El álbum NO existe. Intente de nuevo.");
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Album no encontrado. Intente de nuevo.");
 				}
 			}
 		});
@@ -178,7 +182,6 @@ public void menuTop() {
 		
 		return albumes;
 	}
-	
 	public JMenu menuTOPreportes() {
 		JMenu reportes = new JMenu("Reportes");
 		reportes.setFont(new Font("Open Sans", Font.PLAIN, 15));
@@ -214,25 +217,49 @@ public void menuTop() {
 		reportes.add(generaTXT);
 		return reportes;
 	}
-	
-	public JMenu menuTOPestadisticas(){
-		JMenu estadisticas = new JMenu("Estadísticas");
-		estadisticas.setFont(new Font("Open Sans", Font.PLAIN, 15));	
-		
-		JMenuItem mntmVerEstadisticas = new JMenuItem("Ver estadisticas");
-		estadisticas.add(mntmVerEstadisticas);
-		estadisticas.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				contentPane = new JPanel();
-				contentPane.setBackground(Color.blue);
-				
-				contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
-				setContentPane(contentPane);
-			}
-		});
-		return estadisticas;
+	public JMenu menuTOPestadisticas() {
+	    JMenu estadisticas = new JMenu("Estadísticas");
+	    estadisticas.setFont(new Font("Open Sans", Font.PLAIN, 15));
+
+	    JMenuItem VerEstadisticas = new JMenuItem("Histograma de Publicaciones");
+	    VerEstadisticas.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	            // Crear una nueva ventana JFrame
+	            JFrame ventanaEstadisticas = new JFrame("Estadística: Histograma Publicaciones");
+	            ventanaEstadisticas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	            ventanaEstadisticas.setSize(400, 400);
+
+	            // Obtener la lista de reportes de cantidad de "Me gusta" por tipo de publicación
+	            Map<String, List<Publicacion>> listaPublicacionesPorTipo = perfilInstagram.agruparPublicacionesPorTipo();
+
+	            // Crear el arreglo de datos para el histograma
+	            int[] data = new int[listaPublicacionesPorTipo.size()];
+	            String[] labels = new String[listaPublicacionesPorTipo.size()];
+	            int index = 0;
+	            for (Map.Entry<String, List<Publicacion>> entry : listaPublicacionesPorTipo.entrySet()) {
+	                String tipoPublicacion = entry.getKey();
+	                List<Publicacion> publicaciones = entry.getValue();
+	                int cantidadPublicaciones = publicaciones.size();
+	                data[index] = cantidadPublicaciones;
+	                labels[index] = tipoPublicacion;
+	                index++;
+	            }
+
+	            HistogramaPublicaciones estadisticasPanel = new HistogramaPublicaciones();
+	            estadisticasPanel.setHistogramData(data, labels);
+	            ventanaEstadisticas.getContentPane().add(estadisticasPanel, BorderLayout.CENTER);
+
+	            ventanaEstadisticas.setVisible(true);
+	        }
+	    });
+
+	    estadisticas.add(VerEstadisticas);
+	    return estadisticas;
 	}
-	
+
+
+
+
 	public JMenu menuTOPopciones() {
 		JMenu opciones = new JMenu("Opciones");
 		opciones.setFont(new Font("Open Sans", Font.PLAIN, 15));
@@ -258,29 +285,51 @@ public void menuTop() {
 		opciones.add(filtraPublicaciones);
 		return opciones;
 	}
-	
+		
 	public void publicacionesActuales() {
-		
-		/**
-		 * Setea el espacio donde apareceran las Publicaciones del Perfil
-		 */
-		
-		JPanel jpPublicaciones = new JPanel();
-		jpPublicaciones.setBackground(Color.LIGHT_GRAY);
-		jpPublicaciones.setFont(new Font("Open Sans", Font.PLAIN, 20));
-		
-		try {
-			Set<String> nombresP = perfilInstagram.getNombresPublicaciones();
-			for (String nombre : nombresP) {
-				JLabel publi = new JLabel();
-				publi.setText(nombre);
-				jpPublicaciones.add(publi);
-				jpPublicaciones.setLayout(new GridLayout(1, 0, 0, 0));
-				contentPane.add(jpPublicaciones, BorderLayout.CENTER);
+	    /**
+	     * Setea el espacio donde aparecerán las Publicaciones del Perfil
+	     */
+
+	    JPanel jpPublicaciones = new JPanel();
+	    jpPublicaciones.setBackground(Color.LIGHT_GRAY);
+	    jpPublicaciones.setFont(new Font("Open Sans", Font.PLAIN, 20));
+	    jpPublicaciones.setLayout(new GridLayout(0, 3, 10, 10)); // Configura el GridLayout con 3 columnas y espacios de 10 píxeles
+
+	    try {
+	        Set<Publicacion> listaPublicaciones = perfilInstagram.getPublicaciones();
+	        for (Publicacion publicacion : listaPublicaciones) {
+	            JPanel panel = new JPanel(); // Crea un JPanel para cada publicación
+	            panel.setBackground(Color.WHITE);
+	            panel.setLayout(new GridLayout(2, 1)); // Configura un GridLayout para el panel interno
+
+	            String tipoPublicacion = publicacion.getTipoPublicacion();
+	            JLabel imageLabel = new JLabel(); // JLabel que muestra el icono
+	            if (tipoPublicacion.equals("Audio")) {
+	                imageLabel.setIcon(AssetsUtils.obtenerIcono("audio"));
+	                panel.setBackground(Color.GRAY);
+	            } else if (tipoPublicacion.equals("Imagen")) {
+	                imageLabel.setIcon(AssetsUtils.obtenerIcono("image"));
+	                panel.setBackground(Color.GRAY);
+	            } else {
+	                imageLabel.setIcon(AssetsUtils.obtenerIcono("video"));
+	                panel.setBackground(Color.GRAY);
+	            }
+	            imageLabel.setHorizontalAlignment(JLabel.CENTER);
+
+	            JLabel nameLabel = new JLabel(publicacion.getNombrePublicacion()); // JLabel para mostrar el nombre de la publicación
+	            nameLabel.setHorizontalAlignment(JLabel.CENTER);
+
+	            panel.add(imageLabel);
+	            panel.add(nameLabel);
+
+	            jpPublicaciones.add(panel);
 	        }
-		} catch (SinDatosException e) {
-			jpPublicaciones.setVisible(false);
-		}	
+	        contentPane.add(jpPublicaciones, BorderLayout.CENTER);
+	        contentPane.revalidate();
+	        contentPane.repaint();
+	    } catch (SinDatosException e) {
+	        jpPublicaciones.setVisible(false);
+	    }
 	}
-	
 }

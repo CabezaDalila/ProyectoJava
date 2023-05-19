@@ -14,10 +14,6 @@
 				<comentario>Gran audio</comentario>
 				<comentario>Me encanta la calidad</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 1</album>
-				<album>Album 3</album>
-			</albumes>
 		</audio>
 	</publicacion>
 	<publicacion>
@@ -36,10 +32,6 @@
 				<comentario>Excelente imagen</comentario>
 				<comentario>Qué colores tan vivos</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 2</album>
-				<album>Album 3</album>
-			</albumes>
 		</imagen>
 	</publicacion>
 	<publicacion>
@@ -58,9 +50,6 @@
 				<comentario>Video increíble</comentario>
 				<comentario>Me encantó</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 3</album>
-			</albumes>
 		</video>
 	</publicacion>
 	<publicacion>
@@ -77,8 +66,6 @@
 				<comentario>Buen sonido</comentario>
 				<comentario>Gran calidad</comentario>
 			</comentarios>
-			<albumes>
-			</albumes>
 		</audio>
 	</publicacion>
 	<publicacion>
@@ -95,10 +82,6 @@
 				<comentario>Me encanta este audio</comentario>
 				<comentario>Gran ritmo</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 6</album>
-				<album>Album 7</album>
-			</albumes>
 		</audio>
 	</publicacion>
 	<publicacion>
@@ -115,10 +98,6 @@
 				<comentario>Audio relajante</comentario>
 				<comentario>Perfecto para trabajar</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 8</album>
-				<album>Album 9</album>
-			</albumes>
 		</audio>
 	</publicacion>
 	<publicacion>
@@ -137,10 +116,6 @@
 				<comentario>Maravillosa imagen</comentario>
 				<comentario>Buenos detalles</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 10</album>
-				<album>Album 11</album>
-			</albumes>
 		</imagen>
 	</publicacion>
 	<publicacion>
@@ -159,10 +134,6 @@
 				<comentario>Paisaje hermoso</comentario>
 				<comentario>Me encanta la vista</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 12</album>
-				<album>Album 13</album>
-			</albumes>
 		</imagen>
 	</publicacion>
 	<publicacion>
@@ -181,10 +152,6 @@
 				<comentario>Gran foto urbana</comentario>
 				<comentario>Me gusta el contraste</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 14</album>
-				<album>Album 15</album>
-			</albumes>
 		</imagen>
 	</publicacion>
 	<publicacion>
@@ -202,9 +169,6 @@
 				<comentario>Video emocionante</comentario>
 				<comentario>Me encanta el deporte</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 16</album>
-			</albumes>
 		</video>
 	</publicacion>
 	<publicacion>
@@ -218,13 +182,10 @@
 				<etiqueta>video</etiqueta>
 				<etiqueta>viaje</etiqueta>
 			</etiquetas>
-			<comentarios>
+			<comentarios>>
 				<comentario>Video inspirador</comentario>
 				<comentario>Quiero viajar</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 17</album>
-			</albumes>
 		</video>
 	</publicacion>
 	<publicacion>
@@ -242,9 +203,6 @@
 				<comentario>Impresionante calidad</comentario>
 				<comentario>Se ve increíble en 4K</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 18</album>
-			</albumes>
 		</video>
 	</publicacion>
 	<publicacion>
@@ -261,9 +219,6 @@
 			</etiquetas>
 			<comentarios>
 			</comentarios>
-			<albumes>
-				<album>Album 19</album>
-			</albumes>
 		</video>
 	</publicacion>
 	<publicacion>
@@ -281,8 +236,6 @@
 				<comentario>Video lleno de acción</comentario>
 				<comentario>Me mantuvo al borde de mi asiento</comentario>
 			</comentarios>
-			<albumes>
-			</albumes>
 		</video>
 	</publicacion>
 	<publicacion>
@@ -301,9 +254,6 @@
 				<comentario>Impresionante resolución</comentario>
 				<comentario>Me encantan los detalles</comentario>
 			</comentarios>
-			<albumes>
-				<album>Album 21</album>
-			</albumes>
 		</imagen>
 	</publicacion>
 </publicaciones>

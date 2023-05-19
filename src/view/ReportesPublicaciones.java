@@ -71,6 +71,7 @@ public class ReportesPublicaciones extends JDialog {
         // Crear un JTable con el DefaultTableModel
         table = new JTable(model);
         table.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        table.setBackground(new Color(186, 189, 182));
         table.setEnabled(false);
         table.setRowSelectionAllowed(false);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -88,6 +89,7 @@ public class ReportesPublicaciones extends JDialog {
 		contentPanel.setLayout(null);
 		contentPanel.add(scrollPane);
 		contentPanel.add(btnNewButton);
+		contentPanel.setBackground(Color.LIGHT_GRAY);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cargarDatos();
@@ -117,6 +119,7 @@ public class ReportesPublicaciones extends JDialog {
 		lblCantPubliImagen = new JLabel("-");
 		lblCantPubliImagen.setFont(new Font("Tahoma", Font.ITALIC, 11));
 		resumenPanel.setLayout(new GridLayout(0, 4, 0, 0));
+		resumenPanel.setBackground(Color.LIGHT_GRAY);
 		
 		label = new JLabel("");
 		label.setForeground(new Color(128, 128, 128));
