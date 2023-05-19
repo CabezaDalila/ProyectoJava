@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.*;
 
 import exception.AlbumNoEncontradoException;
 import exception.PublicacionNoEncontradaException;
 
-public class Album {
+public class Album  implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String nombreAlbum;
 	private ArrayList<Album> sublistaAlbumes;
 	private ArrayList<Publicacion> listaPublicaciones;
@@ -46,6 +48,23 @@ public class Album {
 		this.nombreAlbum = nombreAlbum;
 	}
 	
+	public ArrayList<Album> getSublistaAlbumes() {
+		return sublistaAlbumes;
+	}
+
+	public void setSublistaAlbumes(ArrayList<Album> sublistaAlbumes) {
+		this.sublistaAlbumes = sublistaAlbumes;
+	}
+	
+
+	public ArrayList<Publicacion> getListaPublicaciones() {
+		return listaPublicaciones;
+	}
+
+	public void setListaPublicaciones(ArrayList<Publicacion> listaPublicaciones) {
+		this.listaPublicaciones = listaPublicaciones;
+	}
+
 	/**
 	 * Desasocia de manera bidireccional las referencias de las  publicaciones de este album
 	 * y tambien hace esta misma accion para todos los subalbumes asociados.

@@ -1,6 +1,8 @@
 package model;
+import java.io.Serializable;
 import java.time.LocalDate;
-public class Video extends Publicacion implements Durable, Filtrable {
+public class Video extends Publicacion implements Durable, Filtrable,Serializable {
+	private static final long serialVersionUID = 1L;
 	private String resolucion;
 	private int cantCuadros;
 

@@ -1,20 +1,29 @@
 package model;
 
 import parser.CargaXML;
+import reports.ReporteAlbum;
 import reports.ReportePublicacion;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ObjectStreamException;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.*;
 import exception.*;
 
-public class PerfilInstagram {
+public class PerfilInstagram implements Serializable{
 	
 	/** 
 	 * Uso de Modelo Singleton
 	 */
-	
+	private static final long serialVersionUID = 1L;
 	String nombrePerfil; // BUSCAR COMO PONER EL NOMBRE (SETEAR O SOBRECARGAR GETINSTACE)
 	private static PerfilInstagram perfil;
 	private Set<Publicacion> listaPublicaciones;
 	private List<Album> listaAlbumes;
+	
 
 	private PerfilInstagram() {
 		this.listaPublicaciones = new TreeSet<Publicacion>();
@@ -22,17 +31,30 @@ public class PerfilInstagram {
 	}
 
 	public static PerfilInstagram getInstance() {
-		if (perfil == null)
-			perfil = new PerfilInstagram();
-		return perfil;
+	    if (perfil == null) {
+	        perfil = new PerfilInstagram();
+	        System.out.println("Creando nueva instancia de PerfilInstagram");
+	    } else {
+	        System.out.println("Devolviendo la instancia existente de PerfilInstagram");
+	    }
+	    return perfil;
 	}
+
 
 	public void cargarPublicaciones() {
 		CargaXML cargador = new CargaXML();
-		cargador.cargarPublicacionesXML(this);// es como si le pasara perfil o sea la instancia donde se ejecuta el
-												// cargarPublicaciones()
+		cargador.cargarPublicacionesXML(this);
 	}
 	
+	
+	public List<Album> getListaAlbumes() {
+		return listaAlbumes;
+	}
+
+	public void setListaAlbumes(List<Album> listaAlbumes) {
+		this.listaAlbumes = listaAlbumes;
+	}
+
 	public Set<Publicacion> getPublicaciones() {
 		return listaPublicaciones;
 	}
@@ -157,7 +179,7 @@ public class PerfilInstagram {
 		}
 	}
 	
-	public void eliminarPublicacion(Publicacion publicacionAEliminar) throws PublicacionNoEncontradaException {
+	public void eliminarPublicacion(Publicacion publicacionAEliminar) throws PublicacionNoEncontradaException, AlbumNoEncontradoException {
 	    Iterator<Publicacion> iteradorPublicacion = listaPublicaciones.iterator();
 	    while (iteradorPublicacion.hasNext()) {
 	        Publicacion publicacion = iteradorPublicacion.next();
@@ -188,14 +210,25 @@ public class PerfilInstagram {
 		 */
 	}
 
-	public void resporteAlfabeticoAlbumes() {
-		/*
-		 * Listado alfabético de Álbumes, detallando para cada uno cantidad de
-		 * publicaciones subidas en un rango de fechas solicitado al operador. Incluir
-		 * la cantidad de comentarios correspondientes a esas publicaciones.(por
-		 * pantalla y en archivos de texto):
-		 */
+	public List<ReporteAlbum> listadoDeAlbumes(LocalDate inicio,LocalDate fin) {
+		List<ReporteAlbum> listaReportesAlbumes=new ArrayList<ReporteAlbum>();
+		for(Album album:listaAlbumes) {
+			String nombreAlbum=album.getNombreAlbum();
+			int contPublicaciones=0;
+			int contComentarios=0;
+			for(Publicacion publicacion:album.getListaPublicaciones()) {
+				if(publicacion.estaFechaEnRango(inicio,fin)) {
+					contPublicaciones++;
+					contComentarios+=publicacion.getCantidadDeComentarios();
+				}
+			}
+			ReporteAlbum reporte=new ReporteAlbum(nombreAlbum,contPublicaciones,contComentarios);
+			listaReportesAlbumes.add(reporte);
+		}
+		
+		return listaReportesAlbumes;
 	}
+
 
 	@Override
 	public String toString() {

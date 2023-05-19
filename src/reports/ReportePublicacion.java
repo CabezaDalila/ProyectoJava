@@ -1,6 +1,9 @@
 package reports;
 
-public class ReportePublicacion {
+import java.io.Serializable;
+
+public class ReportePublicacion implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String tipoPublicacion;
 	private int cantidadPublicaciones;
 	private float promedio;

@@ -1,0 +1,12 @@
+Tipo: Video
+Cantidad de publicaciones: 6
+Promedio de Mg: 475.0
+
+Tipo: Imagen
+Cantidad de publicaciones: 5
+Promedio de Mg: 326.0
+
+Tipo: Audio
+Cantidad de publicaciones: 4
+Promedio de Mg: 157.0
+

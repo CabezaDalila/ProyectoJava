@@ -9,30 +9,41 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.Serializable;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.border.EmptyBorder;
 import exception.*;
 import java.util.*;
 
 
-public class PerfilUsuario extends JFrame {
-	
+public class PerfilUsuario extends JFrame implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private static PerfilInstagram perfilInstagram;
-	
+	private Sistema sistema;
 
 	public static void main(String[] args) {
-		perfilInstagram = PerfilInstagram.getInstance();
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				PerfilUsuario frame = new PerfilUsuario();
-				frame.setVisible(true);
-			}
-		});
+	    EventQueue.invokeLater(new Runnable() {
+	        public void run() {
+	            Sistema sistema = new Sistema();
+	            perfilInstagram = PerfilInstagram.getInstance();
+	            sistema.recupera();  // Deserializo aca
+	            PerfilUsuario frame = new PerfilUsuario(sistema);
+	            frame.setVisible(true);
+	        }
+	    });
 	}
 
-	public PerfilUsuario() {
+
+	public PerfilUsuario(Sistema sistema) {
+	
+		this.sistema = sistema;
+		   
 		setTitle("Perfil del Usuario");
 		//setSize(787,401);
 		//setSize(787,801);
@@ -48,6 +59,14 @@ public class PerfilUsuario extends JFrame {
 		setContentPane(contentPane);
 		
 		menuTop();
+		this.addWindowListener((WindowListener) new WindowAdapter() {
+		    @Override
+		    public void windowClosing(WindowEvent e) {
+		        sistema.serializa();//serializo aca
+		        System.exit(0);
+		    }
+		});
+
 	}
 	
 public void menuTop() {
@@ -86,8 +105,11 @@ public void menuTop() {
 					nombreAlbum = JOptionPane.showInputDialog(null, "Ingrese el nombre del nuevo Album");
 				else {
 					Album nuevoAlbum = new Album(nombreAlbum);
-					PerfilInstagram.getInstance().addAlbum(nuevoAlbum);				
+					PerfilInstagram.getInstance().addAlbum(nuevoAlbum);
+					//System.out.println(nombreAlbum);
+					//System.out.println(perfilInstagram.getListaAlbumes().size());
 					JOptionPane.showMessageDialog(null, "El álbum fue agregado con éxito");
+					sistema.serializa();  // serializa después de agregar un nuevo álbum
 				}
 			}
 		});
@@ -126,6 +148,9 @@ public void menuTop() {
 					perfilInstagram.eliminarPublicacion(publicacionAEliminar);
 				}catch (PublicacionNoEncontradaException e1){
 					JOptionPane.showMessageDialog(null, "La publicación NO existe. Intente de nuevo.");
+				} catch (AlbumNoEncontradoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -275,4 +300,5 @@ public void menuTop() {
 			jpPublicaciones.setVisible(false);
 		}	
 	}
+
 }

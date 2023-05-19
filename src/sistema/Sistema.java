@@ -1,23 +1,75 @@
 package sistema;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.time.LocalDate;
 import java.util.List;
 import model.PerfilInstagram;
-import reports.ReportePublicacion;
+import reports.*;
+import parser.*;
 
-public class Sistema {
+public class Sistema implements Serializable{
+	private static final long serialVersionUID = 1L;
+	private   PerfilInstagram perfil;
 	
-	private static PerfilInstagram perfil;
 
-	public static void main(String[] args) {
-		perfil = PerfilInstagram.getInstance();
-		perfil.cargarPublicaciones();
-		List<ReportePublicacion> listaReportes = perfil.cantidadYpromedioDeMg();
-		generarReporteEnPantalla(listaReportes);
-		generarReporteEnArchivo(listaReportes);
+	public Sistema() {
+	    File a = new File("Datos.ser");
+	    perfil = PerfilInstagram.getInstance();
+	    if (perfil == null) {
+	    
+	        throw new IllegalStateException("El perfil no pudo ser inicializado.");
+	    }
 
+	    if (a.exists()) {
+	    	System.out.println("aa");
+	        this.recupera();
+	        perfil = PerfilInstagram.getInstance();
+	    } else {
+	    	perfil = PerfilInstagram.getInstance();
+	        this.serializa();
+	    }
+	    this.setSistema();
 	}
+
+
+	
+	public void setSistema() {
+		CargaXML carga=new CargaXML();
+		System.out.println("Perfil antes de cargarPublicacionesXML: " + perfil);
+		carga.cargarPublicacionesXML(perfil);
+		this.serializa();
+	}
+	
+	
+	
+	public static void main(String[] args) {
+		
+		Sistema sistema=new Sistema();
+		 //sistema.perfil = PerfilInstagram.getInstance(); // inicializa perfil antes de usarlo
+		//perfil = PerfilInstagram.getInstance();
+		//perfil.cargarPublicaciones();
+		List<ReportePublicacion> listaReportes = sistema.perfil.cantidadYpromedioDeMg();
+		//generarReporteEnPantalla(listaReportes);
+		//generarReporteEnArchivo(listaReportes);
+		
+		
+		
+		
+		
+		
+		LocalDate inicio=LocalDate.parse("2023-05-01");
+        LocalDate fin=LocalDate.parse("2023-05-02");
+        
+        List<ReporteAlbum> listaReportesAlbumes=sistema.perfil.listadoDeAlbumes(inicio,fin);
+        System.out.println("Cantidad de albumes "+sistema.perfil.getListaAlbumes().size());//0
+       // System.out.println(listaReportesAlbumes.size());//0
+
+        for(ReporteAlbum reportes:listaReportesAlbumes) {
+        	System.out.println("Album: "+reportes.getNombreAlbum()+" Cantidad de publicaciones: "+
+        	reportes.getCantidadPublicaciones()+" Cantidad de comentarios: "+reportes.getCantidadComentarios());
+        }
+	}
+
+	
 	
 	public static void generarReporteEnPantalla(List<ReportePublicacion> listaReportes) {
 		for(ReportePublicacion rep: listaReportes) {
@@ -48,5 +100,58 @@ public class Sistema {
         }
         
     }
+	
+	
+	
+	
+	
+	public void serializa() {
+	    ObjectOutputStream exit = null;
+	    try {
+	        exit = new ObjectOutputStream(new FileOutputStream("Datos.ser"));
+	        exit.writeObject(perfil);
+	    } catch (NotSerializableException nse) {
+	        System.out.println("Un objeto no es serializable: " + nse.getMessage());
+	        nse.printStackTrace();
+	    } catch (IOException ioe) {
+	        System.out.println("Error de E/S: " + ioe.getMessage());
+	        ioe.printStackTrace();
+	    } finally {
+	        if (exit != null) {
+	            try {
+	                exit.close();
+	            } catch (IOException ioe) {
+	                System.out.println("Error al cerrar el ObjectOutputStream: " + ioe.getMessage());
+	            }
+	        }
+	    }
+	}
+
+	public void recupera() {
+	    ObjectInputStream in = null;
+	    try {
+	        in = new ObjectInputStream(new FileInputStream("Datos.ser"));
+	        perfil = (PerfilInstagram) in.readObject();
+	    } catch (FileNotFoundException fnfe) {
+	        System.out.println("Archivo no encontrado: " + fnfe.getMessage());
+	    } catch (ClassNotFoundException cnfe) {
+	        System.out.println("Clase PerfilInstagram no encontrada: " + cnfe.getMessage());
+	    } catch (IOException ioe) {
+	        System.out.println("Error de E/S: " + ioe.getMessage());
+	    } finally {
+	        if (in != null) {
+	            try {
+	                in.close();
+	            } catch (IOException ioe) {
+	                System.out.println("Error al cerrar el ObjectInputStream: " + ioe.getMessage());
+	            }
+	        }
+	    }
+	}
+
+
 
 }
+
+	
+

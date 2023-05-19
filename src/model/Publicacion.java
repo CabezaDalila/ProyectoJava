@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import exception.AlbumNoEncontradoException;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public abstract class Publicacion implements Comparable<Publicacion>{
+public abstract class Publicacion implements Comparable<Publicacion>,Serializable{
+	private static final long serialVersionUID = 1L;
 	private String nombrePublicacion;
 	private LocalDate fechaSubida;
 	private int cantMG;
@@ -94,7 +96,9 @@ public abstract class Publicacion implements Comparable<Publicacion>{
 	public void setListaComentarios(ArrayList<String> listaComentarios) {
 		this.listaComentarios = listaComentarios;
 	}
-
+	public int getCantidadDeComentarios() {
+		return listaComentarios.size();
+	}
 	public ArrayList<Album> getListaAlbumesPertenece() {
 		return listaAlbumesPertenece;
 	}
@@ -130,4 +134,10 @@ public abstract class Publicacion implements Comparable<Publicacion>{
 	    	listaAlbumesPertenece.add(album);
 	    }
 	}
+	public boolean estaFechaEnRango(LocalDate inicio, LocalDate fin) {
+		 
+	    return (fechaSubida.isEqual(inicio) || fechaSubida.isAfter(inicio)) &&
+	    (fechaSubida.isEqual(fin) || fechaSubida.isBefore(fin));
+	}
+
 }
