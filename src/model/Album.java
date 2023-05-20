@@ -1,11 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.*;
 
 import exception.AlbumNoEncontradoException;
 import exception.PublicacionNoEncontradaException;
 
-public class Album {
+public class Album implements Serializable{
 	private String nombreAlbum;
 	private ArrayList<Album> sublistaAlbumes;
 	private ArrayList<Publicacion> listaPublicaciones;

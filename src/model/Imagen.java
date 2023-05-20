@@ -1,7 +1,9 @@
 package model;
-import java.util.*;
+
+import java.io.Serializable;
 import java.time.LocalDate;
-public class Imagen extends Publicacion implements Filtrable {
+
+public class Imagen extends Publicacion implements Filtrable, Serializable {
 	private String resolucion;
 	private int ancho;
 	private int alto;

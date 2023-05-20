@@ -1,6 +1,9 @@
 package model;
+
+import java.io.Serializable;
 import java.time.LocalDate;
-public class Audio extends Publicacion implements Durable {
+
+public class Audio extends Publicacion implements Durable, Serializable {
 	private int velocidadBits;
 
 	public Audio(String nombrePublicacion, LocalDate fechaSubida, int cantMG, int velocidadBits) {
