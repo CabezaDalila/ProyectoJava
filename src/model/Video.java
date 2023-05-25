@@ -1,6 +1,7 @@
 package model;
+import java.io.Serializable;
 import java.time.LocalDate;
-public class Video extends Publicacion implements Durable, Filtrable {
+public class Video extends Publicacion implements Durable, Filtrable,Serializable {
 	private String resolucion;
 	private int cantCuadros;
 	private float duracion;

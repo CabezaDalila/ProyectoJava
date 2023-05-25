@@ -1,8 +1,0 @@
-Nombre: 11
-Cantidad de publicaciones en rango de fechas: 0
-Cantidad de comentarios: 0
-
-Nombre: 22
-Cantidad de publicaciones en rango de fechas: 0
-Cantidad de comentarios: 0
-

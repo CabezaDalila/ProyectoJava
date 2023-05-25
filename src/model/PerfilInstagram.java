@@ -28,7 +28,7 @@ public class PerfilInstagram implements Serializable {
 	private static PerfilInstagram perfil;
 	private Set<Publicacion> listaPublicaciones;
 	private List<Album> listaAlbumes;
-
+	 private static PerfilInstagram instance;
 	private PerfilInstagram() {
 		this.listaPublicaciones = new TreeSet<Publicacion>();
 		this.listaAlbumes = new ArrayList<Album>();
@@ -39,7 +39,9 @@ public class PerfilInstagram implements Serializable {
 			perfil = new PerfilInstagram();
 		return perfil;
 	}
-	
+	public static void setInstance(PerfilInstagram perfil) {
+        instance = perfil;
+    }
 
 	public void cargarPublicaciones() {
 		CargaXML cargador = new CargaXML();
