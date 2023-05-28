@@ -1,0 +1,13 @@
+module:ProyectoJava
+excepciones
+modelo
+modelo.enums
+modelo.interfaces
+modelo.reportes
+sistema
+utilidades
+vista
+vista.edicion
+vista.estadisticas
+vista.reportes
+vista.reproduccion

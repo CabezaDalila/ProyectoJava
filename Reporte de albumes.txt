@@ -1,7 +1,0 @@
-Listado de albumes con sus publicaciones en el rango de fechas seleccionado: 
-Fecha de inicio:2023-04-26 Fecha de fin: 2023-04-29
-
-Nombre: 1
-Cantidad de publicaciones en rango de fechas: 2
-Cantidad de comentarios: 4
-
